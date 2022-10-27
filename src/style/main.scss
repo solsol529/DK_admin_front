@@ -1,4 +1,4 @@
-.top {
+.header {
   height: 60px;
   background: rebeccapurple;
   display: flex;
@@ -8,4 +8,43 @@
       height: 60px;
     }
   }
+}
+
+.sidebar {
+  width: 250px;
+  height: calc(100% - 60px);
+  background-color: #fff;
+  border-right: 3px dashed red;
+  position: absolute;
+  top: 60px;
+}
+.sidebar > ul {
+  background: #fff;
+}
+.sidebar > ul > li {
+  height: 45px;
+  overflow: hidden;
+  transition: 0.2s;
+}
+.sidebar > ul > li.show {
+  height: auto;
+}
+.sidebar > ul > li button {
+  width: calc(100% - 14px);
+  height: 45px;
+  padding: 13px 0 13px 75px;
+  box-sizing: border-box;
+  font-size: 14px;
+  text-align: left;
+  position: relative;
+}
+.sidebar > ul > li.show button {
+  background: #23c4bd;
+  border-radius: 0 20px 20px 0px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.center{
+  padding-left: 250px;
 }
