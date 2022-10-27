@@ -12,25 +12,27 @@ const MemberManagement = () =>{
   const offset = (page - 1) * limit;
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => { 
-    const memberData = async () => {
-      setLoading(true);
+  const [prepared, setPrepared] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+     setLoading(true);
       try {
         const response = await api.memberInfo();
         setLists(response.data);
-        console.log(response.data);
+        setPrepared(true);
       } catch (e) {
         console.log(e);
       }
       setLoading(false);
     };
-    memberData();
+    fetchData();
   }, []);
 
   if(loading) {
     return <div className="center"><Loader/></div>
   }
-
+  
   return(
     <div className="center">
       <TopBar name="회원 현황" high1="회원관리"/>
@@ -51,7 +53,7 @@ const MemberManagement = () =>{
               </tr>
             </thead>
             <tbody>
-              {/* {
+              { prepared &&
                 lists.slice(offset, offset + limit)
                 .map(({ memberNum, nickname, grade, countWrite, countComment, phone, email, regDate }) => (
                   <tr>
@@ -65,7 +67,7 @@ const MemberManagement = () =>{
                     <td>{regDate}</td>
                   </tr>
                 ))
-              } */}
+              }
             </tbody>
           </table>
         </div>
