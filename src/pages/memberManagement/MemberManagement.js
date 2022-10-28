@@ -50,6 +50,7 @@ const MemberManagement = () =>{
                 <th>핸드폰 번호</th>
                 <th>이메일</th>
                 <th>가입일</th>
+                <th>프로필 이미지</th>
               </tr>
             </thead>
             <tbody>
@@ -65,6 +66,7 @@ const MemberManagement = () =>{
                     <td>{phone}</td>
                     <td>{email}</td>
                     <td>{regDate}</td>
+                    <td><button>이미지 확인</button></td>
                   </tr>
                 ))
               }
