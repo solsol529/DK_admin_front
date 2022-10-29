@@ -48,18 +48,18 @@ const data = [
     link: ['/content/boardManagement','/content/writeManagement','/content/commentManagement']
   },
   {
-    depth1: '배너관리',
+    depth1: '광고관리',
     depth2: ['배너관리'],
-    link: ['/banner/bannerManagement']
-  },
-  {
-    depth1: '약관관리',
-    depth2: ['약관관리'],
-    link: ['/term/termManagement']
+    link: ['/adManagement']
   },
   {
     depth1: '알림관리',
     depth2: ['알림발송'],
-    link: ['/push/send']
-  }
+    link: ['/noti/send']
+  },
+  // {
+  //   depth1: '약관관리',
+  //   depth2: ['약관관리'],
+  //   link: ['/termManagement']
+  // },
 ]

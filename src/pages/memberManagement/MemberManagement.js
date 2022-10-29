@@ -4,14 +4,16 @@ import SearchBar from "../../components/SearchBar";
 import TopBar from "../../components/TopBar";
 import Pagination from "../../components/Pagination";
 import Loader from "../../components/Loader";
+import { isLogin } from "../../util/common";
 
 const MemberManagement = () =>{
   const [lists, setLists] = useState('');
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
-  const [loading, setLoading] = useState(false);
+  const [pageStart, setPageStart] = useState(0);
 
+  const [loading, setLoading] = useState(false);
   const [prepared, setPrepared] = useState(false);
 
   useEffect(() => {
@@ -29,15 +31,38 @@ const MemberManagement = () =>{
     fetchData();
   }, []);
 
+  if(!isLogin){
+    alert("잘못된 접근입니다!");
+    window.location.replace("/");
+  }
+  
   if(loading) {
     return <div className="center"><Loader/></div>
   }
   
   return(
     <div className="center">
-      <TopBar name="회원 현황" high1="회원관리"/>
+      <TopBar name="회원 현황" high1="회원 관리"/>
       <SearchBar/>
       <div>
+        <label>
+          페이지 당 표시할 게시물 수:&nbsp;
+          <select
+            type="number"
+            value={limit}
+            onChange={({ target: { value } }) => {
+              setLimit(Number(value));
+              setPage(1);
+              setPageStart(0);
+            }}
+          >
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="10" selected>10</option>
+            <option value="12">12</option>
+            <option value="20">30</option>
+          </select>
+        </label>
         <div className="tableWrapper">
           <table>
             <thead>
@@ -78,6 +103,8 @@ const MemberManagement = () =>{
           limit={limit}
           page={page}
           setPage={setPage}
+          pageStart={pageStart}
+          setPageStart={setPageStart}
         />
       </div>
     </div>
