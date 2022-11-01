@@ -16,6 +16,8 @@ const MemberManagement = () =>{
 
   const [loading, setLoading] = useState(false);
   const [prepared, setPrepared] = useState(false);
+  
+  const [inputSearch, setInputSearch] = useState('');
 
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
@@ -40,6 +42,7 @@ const MemberManagement = () =>{
     fetchData();
   }, []);
 
+
   if(!isLogin){
     alert("잘못된 접근입니다!");
     window.location.replace("/");
@@ -48,11 +51,34 @@ const MemberManagement = () =>{
   if(loading) {
     return <div className="center"><Loader/></div>
   }
-  
+
+  const onChangeSearch = (e) =>{
+    setInputSearch(e.target.value);
+  }
+
+  const memberSearch = () =>{
+    window.localStorage.setItem("target", inputSearch);
+    const fetchSearchData = async () => {
+      setLoading(true);
+       try {
+         const response = await api.memberInfoSearch();
+         setLists(response.data);
+         setPrepared(true);
+       } catch (e) {
+         console.log(e);
+       }
+       setLoading(false);
+     };
+    fetchSearchData();
+  }
+
   return(
     <div className="center">
       <TopBar name="회원 현황" high1="회원 관리"/>
-      <SearchBar/>
+      <div className="searchBar">
+        <input type="text" placeholder="회원번호/닉네임/등급" value ={inputSearch} onChange={onChangeSearch}/>
+        <button onClick={memberSearch}>검색</button>
+      </div>
       <div>
         <label>
           페이지 당 표시할 게시물 수:&nbsp;

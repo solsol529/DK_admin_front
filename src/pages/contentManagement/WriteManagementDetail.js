@@ -40,7 +40,6 @@ const WriteManagementDetail = () =>{
     <div className="center">
       <TopBar name="게시글 상세" high1="게시글 관리" high2="콘텐츠 관리"/>
       <div>
-        <span>프로필이미지</span>
         <span>게시글 제목</span>
         <span>작성자</span>
         <span>작성상세시간</span>

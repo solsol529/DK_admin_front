@@ -23,7 +23,7 @@ const WriteManagement = () =>{
     const fetchData = async () => {
      setLoading(true);
       try {
-        const response = await api.memberInfo();
+        const response = await api.writeInfo();
         setLists(response.data);
         setPrepared(true);
       } catch (e) {
@@ -59,7 +59,7 @@ const WriteManagement = () =>{
     if(checked) {
       // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
       const idArray = [];
-      // data.forEach((el) => idArray.push(el.id));
+      lists.forEach((el) => idArray.push(el.id));
       setCheckItems(idArray);
     }
     else {
@@ -80,7 +80,7 @@ const WriteManagement = () =>{
                 <input type='checkbox' name='select-all'
                   onChange={(e) => handleAllCheck(e.target.checked)}
                   // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
-                  // checked={checkItems.length === data.length ? true : false} 
+                  checked={checkItems.length === (lists.length % 10) ? true : false} 
                 />
                 <th>게시글 번호</th>
                 <th>게시글 제목</th>
@@ -91,20 +91,20 @@ const WriteManagement = () =>{
             <tbody>
               { prepared &&
                 lists.slice(offset, offset + limit)
-                .map(({ memberNum, nickname, grade, countWrite, countComment, phone, email, regDate }) => (
+                .map(({ writeNum, writeName, writeDate, nickname}) => (
                   <tr>
                     <td>
                     <input type='checkbox' 
-                      // name={`select-${data.id}`}
-                      // onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
+                      name={`select-${writeNum}`}
+                      onChange={(e) => handleSingleCheck(e.target.checked, writeNum)}
                       // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
-                      // checked={checkItems.includes(data.id) ? true : false} 
+                      checked={checkItems.includes(writeNum) ? true : false} 
                       />
                     </td>
-                    <td>{memberNum}</td>
+                    <td>{writeNum}</td>
+                    <td>{writeName}</td>
+                    <td>{writeDate}</td>
                     <td>{nickname}</td>
-                    <td></td>
-                    <td>{grade}</td>
                   </tr>
                 ))
               }
