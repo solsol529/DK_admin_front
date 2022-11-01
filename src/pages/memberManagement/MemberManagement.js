@@ -5,6 +5,7 @@ import TopBar from "../../components/TopBar";
 import Pagination from "../../components/Pagination";
 import Loader from "../../components/Loader";
 import { isLogin } from "../../util/common";
+import Modal from "../../components/Modal";
 
 const MemberManagement = () =>{
   const [lists, setLists] = useState('');
@@ -15,6 +16,14 @@ const MemberManagement = () =>{
 
   const [loading, setLoading] = useState(false);
   const [prepared, setPrepared] = useState(false);
+
+  // 모달창 노출 여부 state
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달창 노출
+  const showModal = () => {
+      setModalOpen(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,12 +85,13 @@ const MemberManagement = () =>{
                 <th>이메일</th>
                 <th>가입일</th>
                 <th>프로필 이미지</th>
+                <th>광고 수신 동의 여부</th>
               </tr>
             </thead>
             <tbody>
               { prepared &&
                 lists.slice(offset, offset + limit)
-                .map(({ memberNum, nickname, grade, countWrite, countComment, phone, email, regDate }) => (
+                .map(({ memberNum, nickname, grade, countWrite, countComment, phone, email, regDate, pfImg, isAdOk }) => (
                   <tr>
                     <td>{memberNum}</td>
                     <td>{nickname}</td>
@@ -91,7 +101,11 @@ const MemberManagement = () =>{
                     <td>{phone}</td>
                     <td>{email}</td>
                     <td>{regDate}</td>
-                    <td><button>이미지 확인</button></td>
+                    <td>
+                      {pfImg && <button onClick={showModal}>이미지 보기</button>}
+                      {modalOpen && <Modal setModalOpen={setModalOpen} imgUrl={pfImg}/>}
+                    </td>
+                    <td>{isAdOk? "O":"X"}</td>
                   </tr>
                 ))
               }
