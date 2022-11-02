@@ -26,7 +26,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LoginPage/>}/>
           <Route path='/login' element={<LoginPage/>}/>
-          {!isLogin && <Navigate to="/login" />}
+          {/* {!isLogin && <Navigate to="/login" />} */}
           <Route path="/member" element={<MemberManagement/>}/>
           <Route path="/content/boardManagement" element={<BoardManagement/>}/>
           <Route path="/content/writeManagement" element={<WriteManagement/>}/>

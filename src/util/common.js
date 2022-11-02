@@ -1,4 +1,5 @@
-const isLogin = () => !!localStorage.getItem("nickname");
+const isLogin = !!localStorage.getItem("nickname");
+
 const logout = () =>{
   localStorage.removeItem("nickname");
   localStorage.removeItem("pwd");

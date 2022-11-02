@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../resource/sleep_kirby.gif";
-import { isLogin } from "../util/common";
+import { isLogin, logout } from "../util/common";
 
 const Header = () =>{ 
   return(
@@ -9,7 +9,7 @@ const Header = () =>{
       {isLogin && 
         <p className="headerMenu">
           <span>관리자(admin)</span>
-          <button>로그아웃</button>
+          <button onClick={logout}>로그아웃</button>
         </p>
       }
     </div>

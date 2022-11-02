@@ -3,7 +3,13 @@ const HEADER = 'application/json';
 const BASE_URL = "http://localhost:8090/developerKirby/";
 
 const api = {
-  // 회원 정보 조회
+  userLogin: async function(id, pwd) {
+    const loginObj = {
+        id: id,
+        pwd: pwd
+    }
+    return await axios.post(BASE_URL + "AdminLoginServlet", loginObj, HEADER);
+},
   memberInfo: async function() {
     const regCmd = {
       cmd : "MemberInfo" //조회는 이름만 날려주면됨
@@ -76,6 +82,7 @@ const api = {
     }
     return await axios.post(BASE_URL + "AdminCommentDeleteServlet", regCmd, HEADER);
   },
+
 };
 
 export default api;
