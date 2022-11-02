@@ -15,6 +15,7 @@ import WriteManagementSearch from "./pages/contentManagement/WriteManagementSear
 import CommentManagement from "./pages/contentManagement/CommentManagement";
 import AdManagement from "./pages/adManagement/AdManagement";
 import NotiSend from "./pages/notiManagement/NotiSend";
+import WriteManagementDetail from "./pages/contentManagement/WriteManagementDetail";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
           <Route path="/content/boardManagement" element={<BoardManagement/>}/>
           <Route path="/content/writeManagement" element={<WriteManagement/>}/>
           <Route path="/content/writeManagement/search/:query" element={<WriteManagementSearch/>}/>
-          <Route path="/content/writeManagement/datail/:writeNum" element={<WriteManagementSearch/>}/>
+          <Route path="/content/writeManagement/detail/:writeId" element={<WriteManagementDetail/>}/>
           <Route path="/content/commentManagement" element={<CommentManagement/>}/>
           <Route path="/adManagement" element={<AdManagement/>}/>
           <Route path="/noti/send" element={<NotiSend/>}/>

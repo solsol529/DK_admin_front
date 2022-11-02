@@ -98,7 +98,7 @@ const WriteManagement = () =>{
             <option value="7">7</option>
             <option value="10" selected>10</option>
             <option value="12">12</option>
-            <option value="20">30</option>
+            <option value="20">20</option>
           </select>
         </label>
         <div className="tableWrapper">
@@ -132,7 +132,7 @@ const WriteManagement = () =>{
                       />
                     </td>
                     <td>{writeNum}</td>
-                    <td>{writeName}</td>
+                    <td><Link to={`/content/writeManagement/detail/${writeNum}`}>{writeName}</Link></td>
                     <td>{writeDate}</td>
                     <td>{nickname}</td>
                   </tr>

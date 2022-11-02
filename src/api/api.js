@@ -46,6 +46,12 @@ const api = {
     }
     return await axios.post(BASE_URL + "AdminWriteSearchServlet", regCmd, HEADER);
   },
+  writeInfoDetail: async function() {
+    const regCmd = {
+      target : localStorage.getItem("target") //검색어 타겟 날려줌
+    }
+    return await axios.post(BASE_URL + "AdminWriteDetailServlet", regCmd, HEADER);
+  },
 };
 
 export default api;
