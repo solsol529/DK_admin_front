@@ -8,6 +8,7 @@ const Pagination = (props) => {
         onClick={() => {
           props.setPage(props.page - 1); 
           props.setPageStart(Math.floor((props.page - 2) / 10));
+          props.setCheckItems([]);
           }} 
         disabled={props.page === 1}>
         &lt;
@@ -21,6 +22,7 @@ const Pagination = (props) => {
                 key={props.pageStart * 10 + i + 1}
                 onClick={() => {
                   props.setPage(props.pageStart * 10 + i + 1);
+                  props.setCheckItems([]);
                 }}
                 aria-current={props.page === props.pageStart * 10 + i + 1 ? "page" : null}
               >
@@ -31,7 +33,8 @@ const Pagination = (props) => {
       <button 
         onClick={() =>{
           props.setPage(props.page + 1); 
-          props.setPageStart(Math.floor(props.page / 10));}}
+          props.setPageStart(Math.floor(props.page / 10));
+          props.setCheckItems([]);}}
         disabled={props.page === numPages}
       >
         &gt;

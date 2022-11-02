@@ -19,6 +19,12 @@ const WriteManagement = () =>{
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
 
+  const [inputSearch, setInputSearch] = useState('');
+
+  const onChangeSearch = (e) =>{
+    setInputSearch(e.target.value);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
      setLoading(true);
@@ -59,7 +65,7 @@ const WriteManagement = () =>{
     if(checked) {
       // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
       const idArray = [];
-      lists.forEach((el) => idArray.push(el.id));
+      lists.slice(offset, offset + limit).forEach((el) => {idArray.push(el.writeNum)});
       setCheckItems(idArray);
     }
     else {
@@ -68,11 +74,48 @@ const WriteManagement = () =>{
     }
   }
 
+  const writeSearch = () =>{
+    window.localStorage.setItem("target", inputSearch);
+    const fetchSearchData = async () => {
+      setLoading(true);
+       try {
+         const response = await api.writeInfoSearch();
+         setLists(response.data);
+         setPrepared(true);
+       } catch (e) {
+         console.log(e);
+       }
+       setLoading(false);
+     };
+    fetchSearchData();
+  }
+
   return(
     <div className="center">
       <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
-      <SearchBar/>
+      <div className="searchBar">
+        <input type="text" placeholder="게시판 이름" value ={inputSearch} onChange={onChangeSearch}/>
+        <button onClick={writeSearch}>검색</button>
+      </div>
       <div>
+      <label>
+          페이지 당 표시할 게시물 수:&nbsp;
+          <select
+            type="number"
+            value={limit}
+            onChange={({ target: { value } }) => {
+              setLimit(Number(value));
+              setPage(1);
+              setPageStart(0);
+            }}
+          >
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="10" selected>10</option>
+            <option value="12">12</option>
+            <option value="20">30</option>
+          </select>
+        </label>
         <div className="tableWrapper">
           <table>
             <thead>
@@ -80,7 +123,9 @@ const WriteManagement = () =>{
                 <input type='checkbox' name='select-all'
                   onChange={(e) => handleAllCheck(e.target.checked)}
                   // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
-                  checked={checkItems.length === (lists.length % 10) ? true : false} 
+                  checked={checkItems.length === (
+                  Math.floor(lists.length/limit) >= page ? 
+                  limit :lists.length % limit)? true : false} 
                 />
                 <th>게시글 번호</th>
                 <th>게시글 제목</th>
@@ -119,6 +164,8 @@ const WriteManagement = () =>{
           setPage={setPage}
           pageStart={pageStart}
           setPageStart={setPageStart}
+          checkItems={checkItems} 
+          setCheckItems={setCheckItems}
         />
       </div>
     </div>

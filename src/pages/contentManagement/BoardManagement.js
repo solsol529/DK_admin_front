@@ -18,10 +18,6 @@ const BoardManagement = () =>{
 
   const [inputSearch, setInputSearch] = useState('');
 
-  const [isChange, setIsChange] = useState([]);
-  // 바꿀 이름 담을 배열
-  const [inputName, setInputName] = useState([]);
-
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
 
@@ -51,10 +47,6 @@ const BoardManagement = () =>{
 
   const onChangeSearch = (e) =>{
     setInputSearch(e.target.value);
-  }
-
-  const onChangeName = (e) =>{
-    setInputName(e.target.value);
   }
 
   const boardSearch = () =>{
