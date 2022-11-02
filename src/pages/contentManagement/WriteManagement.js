@@ -78,7 +78,9 @@ const WriteManagement = () =>{
       <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
       <div className="searchBar">
         <input type="text" placeholder="제목, 작성자" value ={inputSearch} onChange={onChangeSearch}/>
-        <button><Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link></button>
+        <button>
+          <Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link>
+        </button>
       </div>
       <div>
       <label>
@@ -120,7 +122,7 @@ const WriteManagement = () =>{
               {lists &&
                 lists.slice(offset, offset + limit)
                 .map(({ writeNum, writeName, writeDate, nickname}) => (
-                  <tr>
+                  <tr key={writeNum}>
                     <td>
                     <input type='checkbox' 
                       name={`select-${writeNum}`}

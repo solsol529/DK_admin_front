@@ -30,6 +30,7 @@ function App() {
           <Route path="/content/boardManagement" element={<BoardManagement/>}/>
           <Route path="/content/writeManagement" element={<WriteManagement/>}/>
           <Route path="/content/writeManagement/search/:query" element={<WriteManagementSearch/>}/>
+          <Route path="/content/writeManagement/datail/:writeNum" element={<WriteManagementSearch/>}/>
           <Route path="/content/commentManagement" element={<CommentManagement/>}/>
           <Route path="/adManagement" element={<AdManagement/>}/>
           <Route path="/noti/send" element={<NotiSend/>}/>

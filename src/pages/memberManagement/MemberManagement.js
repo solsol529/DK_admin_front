@@ -5,9 +5,9 @@ import TopBar from "../../components/TopBar";
 import Pagination from "../../components/Pagination";
 import Loader from "../../components/Loader";
 import { isLogin } from "../../util/common";
-import Modal from "../../components/Modal";
+import { Link } from 'react-router-dom';
 
-const MemberManagement = () =>{
+const WriteManagement = () =>{
   const [lists, setLists] = useState('');
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -15,25 +15,22 @@ const MemberManagement = () =>{
   const [pageStart, setPageStart] = useState(0);
 
   const [loading, setLoading] = useState(false);
-  const [prepared, setPrepared] = useState(false);
-  
+
+  // 체크된 아이템을 담을 배열
+  const [checkItems, setCheckItems] = useState([]);
+
   const [inputSearch, setInputSearch] = useState('');
 
-  // 모달창 노출 여부 state
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // 모달창 노출
-  const showModal = () => {
-      setModalOpen(true);
-  };
+  const onChangeSearch = (e) =>{
+    setInputSearch(e.target.value);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
      setLoading(true);
       try {
-        const response = await api.memberInfo();
+        const response = await api.writeInfo();
         setLists(response.data);
-        setPrepared(true);
       } catch (e) {
         console.log(e);
       }
@@ -42,6 +39,7 @@ const MemberManagement = () =>{
     fetchData();
   }, []);
 
+  
 
   if(!isLogin){
     alert("잘못된 접근입니다!");
@@ -51,37 +49,41 @@ const MemberManagement = () =>{
   if(loading) {
     return <div className="center"><Loader/></div>
   }
+  
+  // 체크박스 단일 선택
+  const handleSingleCheck = (checked, id) => {
+    if (checked) {
+      // 단일 선택 시 체크된 아이템을 배열에 추가
+      setCheckItems(prev => [...prev, id]);
+    } else {
+      // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+      setCheckItems(checkItems.filter((el) => el !== id));
+    }
+  };
 
-  const onChangeSearch = (e) =>{
-    setInputSearch(e.target.value);
-  }
-
-  const memberSearch = () =>{
-    window.localStorage.setItem("target", inputSearch);
-    setPrepared(false);
-    const fetchSearchData = async () => {
-      setLoading(true);
-       try {
-         const response = await api.memberInfoSearch();
-         setLists(response.data);
-         setPrepared(true);
-       } catch (e) {
-         console.log(e);
-       }
-       setLoading(false);
-     };
-    fetchSearchData();
+  // 체크박스 전체 선택
+  const handleAllCheck = (checked) => {
+    if(checked) {
+      // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
+      const idArray = [];
+      lists.slice(offset, offset + limit).forEach((el) => {idArray.push(el.writeNum)});
+      setCheckItems(idArray);
+    }
+    else {
+      // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
+      setCheckItems([]);
+    }
   }
 
   return(
     <div className="center">
-      <TopBar name="회원 현황" high1="회원 관리"/>
+      <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
       <div className="searchBar">
-        <input type="text" placeholder="회원번호/닉네임/등급" value ={inputSearch} onChange={onChangeSearch}/>
-        <button onClick={memberSearch}>검색</button>
+        <input type="text" placeholder="제목, 작성자" value ={inputSearch} onChange={onChangeSearch}/>
+        <button><Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link></button>
       </div>
       <div>
-        <label>
+      <label>
           페이지 당 표시할 게시물 수:&nbsp;
           <select
             type="number"
@@ -103,41 +105,42 @@ const MemberManagement = () =>{
           <table>
             <thead>
               <tr>
-                <th>회원번호</th>
-                <th>닉네임</th>
-                <th>등급</th>
-                <th>게시글 수</th>
-                <th>댓글 수</th>
-                <th>핸드폰 번호</th>
-                <th>이메일</th>
-                <th>가입일</th>
-                <th>프로필 이미지</th>
-                <th>광고 수신 동의 여부</th>
+                <input type='checkbox' name='select-all'
+                  onChange={(e) => handleAllCheck(e.target.checked)}
+                  // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
+                  checked={checkItems.length === (
+                  Math.floor(lists.length/limit) >= page ? 
+                  limit :lists.length % limit)? true : false} 
+                />
+                <th>게시글 번호</th>
+                <th>게시글 제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
               </tr>
             </thead>
             <tbody>
-              { prepared &&
+              {lists &&
                 lists.slice(offset, offset + limit)
-                .map(({ memberNum, nickname, grade, countWrite, countComment, phone, email, regDate, pfImg, isAdOk }) => (
-                  <tr>
-                    <td>{memberNum}</td>
-                    <td>{nickname}</td>
-                    <td>{grade}</td>
-                    <td>{countWrite}</td>
-                    <td>{countComment}</td>
-                    <td>{phone}</td>
-                    <td>{email}</td>
-                    <td>{regDate}</td>
+                .map(({ writeNum, writeName, writeDate, nickname}) => (
+                  <tr key={writeNum}>
                     <td>
-                      {pfImg && <button onClick={showModal}>이미지 보기</button>}
-                      {modalOpen && <Modal setModalOpen={setModalOpen} imgUrl={pfImg}/>}
+                    <input type='checkbox' 
+                      name={`select-${writeNum}`}
+                      onChange={(e) => handleSingleCheck(e.target.checked, writeNum)}
+                      // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
+                      checked={checkItems.includes(writeNum) ? true : false} 
+                      />
                     </td>
-                    <td>{isAdOk? "O":"X"}</td>
+                    <td>{writeNum}</td>
+                    <td>{writeName}</td>
+                    <td>{writeDate}</td>
+                    <td>{nickname}</td>
                   </tr>
                 ))
               }
             </tbody>
           </table>
+          <button>삭제</button>
         </div>
         <Pagination
           total={lists.length}
@@ -146,9 +149,11 @@ const MemberManagement = () =>{
           setPage={setPage}
           pageStart={pageStart}
           setPageStart={setPageStart}
+          checkItems={checkItems} 
+          setCheckItems={setCheckItems}
         />
       </div>
     </div>
   );
 };
-export default MemberManagement;
+export default WriteManagement;

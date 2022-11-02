@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../../api/api";
 import TopBar from "../../components/TopBar";
 import Pagination from "../../components/Pagination";
 import Loader from "../../components/Loader";
 import { isLogin } from "../../util/common";
-import { Link } from 'react-router-dom';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from 'react-router-dom';
 
-const WriteManagementSearch = (props) =>{
+const WriteManagementSearch = () =>{
 
   let { query } = useParams();
 
@@ -18,31 +17,37 @@ const WriteManagementSearch = (props) =>{
   const [pageStart, setPageStart] = useState(0);
 
   const [loading, setLoading] = useState(false);
-  const [prepared, setPrepared] = useState(false);
+  // const [prepared, setPrepared] = useState(false);
 
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
 
   const [inputSearch, setInputSearch] = useState('');
 
+  console.log(query);
+  
   const onChangeSearch = (e) =>{
     setInputSearch(e.target.value);
   }
 
-  useEffect(() => {
-    window.localStorage.setItem("target", query);
-    const fetchSearchData = async () => {
+  const fetchSearchData = useCallback(
+    async () => {
+      window.localStorage.setItem("target", query);
       setLoading(true);
       try {
         const response = await api.writeInfoSearch();
         setLists(response.data);
+        console.log(response);
+        console.log(response.data);
       } catch (e) {
         console.log(e);
       }
-      setLoading(false);
-      };
+      setLoading(false);}
+  , [query]);
+
+  useEffect(() => {
     fetchSearchData();
-  }, []);
+  }, [fetchSearchData]);
 
   if(!isLogin){
     alert("잘못된 접근입니다!");
@@ -78,85 +83,89 @@ const WriteManagementSearch = (props) =>{
     }
   }
 
-  return(
-    <div className="center">
-      <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
-      <div className="searchBar">
-        <input type="text" placeholder="제목, 작성자" value ={inputSearch} onChange={onChangeSearch}/>
-        <button><Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link></button>
-      </div>
-      <div>
-      <label>
-          페이지 당 표시할 게시물 수:&nbsp;
-          <select
-            type="number"
-            value={limit}
-            onChange={({ target: { value } }) => {
-              setLimit(Number(value));
-              setPage(1);
-              setPageStart(0);
-            }}
-          >
-            <option value="5">5</option>
-            <option value="7">7</option>
-            <option value="10" selected>10</option>
-            <option value="12">12</option>
-            <option value="20">30</option>
-          </select>
-        </label>
-        <div className="tableWrapper">
-          <table>
-            <thead>
-              <tr>
-                <input type='checkbox' name='select-all'
-                  onChange={(e) => handleAllCheck(e.target.checked)}
-                  // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
-                  checked={checkItems.length === (
-                  Math.floor(lists.length/limit) >= page ? 
-                  limit :lists.length % limit)? true : false} 
-                />
-                <th>게시글 번호</th>
-                <th>게시글 제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lists &&
-                lists.slice(offset, offset + limit)
-                .map(({ writeNum, writeName, writeDate, nickname}) => (
-                  <tr>
-                    <td>
-                    <input type='checkbox' 
-                      name={`select-${writeNum}`}
-                      onChange={(e) => handleSingleCheck(e.target.checked, writeNum)}
-                      // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
-                      checked={checkItems.includes(writeNum) ? true : false} 
-                      />
-                    </td>
-                    <td>{writeNum}</td>
-                    <td>{writeName}</td>
-                    <td>{writeDate}</td>
-                    <td>{nickname}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-          <button>삭제</button>
+  if(lists){
+    console.log("sadsadsad");
+    console.log(lists);
+    return(
+      <div className="center">
+        <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
+        <div className="searchBar">
+          <input type="text" placeholder="제목, 작성자" value ={inputSearch} onChange={onChangeSearch}/>
+          <button><Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link></button>
         </div>
-        <Pagination
-          total={lists.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-          pageStart={pageStart}
-          setPageStart={setPageStart}
-          checkItems={checkItems} 
-          setCheckItems={setCheckItems}
-        />
+        <div>
+        <label>
+            페이지 당 표시할 게시물 수:&nbsp;
+            <select
+              type="number"
+              value={limit}
+              onChange={({ target: { value } }) => {
+                setLimit(Number(value));
+                setPage(1);
+                setPageStart(0);
+              }}
+            >
+              <option value="5">5</option>
+              <option value="7">7</option>
+              <option value="10" selected>10</option>
+              <option value="12">12</option>
+              <option value="20">30</option>
+            </select>
+          </label>
+          <div className="tableWrapper">
+            <table>
+              <thead>
+                <tr>
+                  <input type='checkbox' name='select-all'
+                    onChange={(e) => handleAllCheck(e.target.checked)}
+                    // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
+                    checked={checkItems.length === (
+                    Math.floor(lists.length/limit) >= page ? 
+                    limit :lists.length % limit)? true : false} 
+                  />
+                  <th>게시글 번호</th>
+                  <th>게시글 제목</th>
+                  <th>작성자</th>
+                  <th>작성일</th>
+                </tr>
+              </thead>
+              <tbody>
+                {lists &&
+                  lists.slice(offset, offset + limit)
+                  .map(({ writeNum, writeName, writeDate, nickname}) => (
+                    <tr>
+                      <td>
+                      <input type='checkbox' 
+                        name={`select-${writeNum}`}
+                        onChange={(e) => handleSingleCheck(e.target.checked, writeNum)}
+                        // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
+                        checked={checkItems.includes(writeNum) ? true : false} 
+                        />
+                      </td>
+                      <td>{writeNum}</td>
+                      <td>{writeName}</td>
+                      <td>{writeDate}</td>
+                      <td>{nickname}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+            <button>삭제</button>
+          </div>
+          <Pagination
+            total={lists.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            pageStart={pageStart}
+            setPageStart={setPageStart}
+            checkItems={checkItems} 
+            setCheckItems={setCheckItems}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 export default WriteManagementSearch;
