@@ -51,13 +51,11 @@ const BoardManagement = () =>{
 
   const boardSearch = () =>{
     window.localStorage.setItem("target", inputSearch);
-    setPrepared(false);
     const fetchSearchData = async () => {
       setLoading(true);
        try {
          const response = await api.boardInfoSearch();
          setLists(response.data);
-         setPrepared(true);
        } catch (e) {
          console.log(e);
        }
@@ -68,13 +66,11 @@ const BoardManagement = () =>{
 
   const boardDelete = () =>{
     window.localStorage.setItem("target", checkItems);
-    setPrepared(false);
     const fetchDeleteData = async () => {
       setLoading(true);
        try {
          const response = await api.boardDelete();
          setLists(response.data);
-         setPrepared(true);
        } catch (e) {
          console.log(e);
        }
@@ -133,7 +129,7 @@ const BoardManagement = () =>{
               </tr>
             </thead>
             <tbody>
-              { prepared &&
+              { lists &&
                 lists.slice(offset, offset + limit)
                 .map(({ boardNum, boardName, countWrite }) => (
                   <tr>

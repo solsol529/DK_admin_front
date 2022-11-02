@@ -143,7 +143,7 @@ const WriteManagementSearch = () =>{
                         />
                       </td>
                       <td>{writeNum}</td>
-                      <td>{writeName}</td>
+                      <td><Link to={`/content/writeManagement/detail/${writeNum}`}>{writeName}</Link></td>
                       <td>{writeDate}</td>
                       <td>{nickname}</td>
                     </tr>

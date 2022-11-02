@@ -52,6 +52,30 @@ const api = {
     }
     return await axios.post(BASE_URL + "AdminWriteDetailServlet", regCmd, HEADER);
   },
+  writeDelete: async function() {
+    const regCmd = {
+      target : localStorage.getItem("target") //삭제할 타겟들 날려줌
+    }
+    return await axios.post(BASE_URL + "AdminWriteDeleteServlet", regCmd, HEADER);
+  },
+  commentInfo: async function() {
+    const regCmd = {
+      cmd : "CommentInfo"
+    }
+    return await axios.post(BASE_URL + "AdminCommentServlet", regCmd, HEADER);
+  },
+  commentInfoSearch: async function() {
+    const regCmd = {
+      target : localStorage.getItem("target") //검색어 타겟 날려줌
+    }
+    return await axios.post(BASE_URL + "AdminCommentSearchServlet", regCmd, HEADER);
+  },
+  commentDelete: async function() {
+    const regCmd = {
+      target : localStorage.getItem("target") //삭제할 타겟들 날려줌
+    }
+    return await axios.post(BASE_URL + "AdminCommentDeleteServlet", regCmd, HEADER);
+  },
 };
 
 export default api;

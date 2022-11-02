@@ -73,6 +73,22 @@ const WriteManagement = () =>{
     }
   }
 
+  const writeDelete = () =>{
+    window.localStorage.setItem("target", checkItems);
+    const fetchDeleteData = async () => {
+      setLoading(true);
+       try {
+         const response = await api.writeDelete();
+         setLists(response.data);
+       } catch (e) {
+         console.log(e);
+       }
+       setLoading(false);
+     };
+    fetchDeleteData();
+    setCheckItems([]);
+  }
+
   return(
     <div className="center">
       <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
@@ -140,7 +156,7 @@ const WriteManagement = () =>{
               }
             </tbody>
           </table>
-          <button>삭제</button>
+          <button onClick={writeDelete}>삭제</button>
         </div>
         <Pagination
           total={lists.length}

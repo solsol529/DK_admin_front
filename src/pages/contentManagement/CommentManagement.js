@@ -5,6 +5,7 @@ import TopBar from "../../components/TopBar";
 import Pagination from "../../components/Pagination";
 import Loader from "../../components/Loader";
 import { isLogin } from "../../util/common";
+import { Link } from 'react-router-dom';
 
 const CommentManagement = () =>{
   const [lists, setLists] = useState('');
@@ -14,18 +15,20 @@ const CommentManagement = () =>{
   const [pageStart, setPageStart] = useState(0);
 
   const [loading, setLoading] = useState(false);
-  const [prepared, setPrepared] = useState(false);
+  const [fullView, setFullView] = useState(false);
 
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
-
+  const [inputSearch, setInputSearch] = useState('');
+  const onChangeSearch = (e) =>{
+    setInputSearch(e.target.value);
+  }
   useEffect(() => {
     const fetchData = async () => {
      setLoading(true);
       try {
-        const response = await api.memberInfo();
+        const response = await api.commentInfo();
         setLists(response.data);
-        setPrepared(true);
       } catch (e) {
         console.log(e);
       }
@@ -59,7 +62,7 @@ const CommentManagement = () =>{
     if(checked) {
       // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
       const idArray = [];
-      // data.forEach((el) => idArray.push(el.id));
+      lists.slice(offset, offset + limit).forEach((el) => idArray.push(el.commentNum));
       setCheckItems(idArray);
     }
     else {
@@ -68,11 +71,63 @@ const CommentManagement = () =>{
     }
   }
 
+  const commentSearch = () =>{
+    window.localStorage.setItem("target", inputSearch);
+    const fetchSearchData = async () => {
+      setLoading(true);
+       try {
+         const response = await api.commentInfoSearch();
+         setLists(response.data);
+       } catch (e) {
+         console.log(e);
+       }
+       setLoading(false);
+     };
+    fetchSearchData();
+  }
+
+  const commentDelete = () =>{
+    window.localStorage.setItem("target", checkItems);
+    const fetchDeleteData = async () => {
+      setLoading(true);
+       try {
+         const response = await api.commentDelete();
+         setLists(response.data);
+       } catch (e) {
+         console.log(e);
+       }
+       setLoading(false);
+     };
+    fetchDeleteData();
+    setCheckItems([]);
+  }
+
   return(
     <div className="center">
       <TopBar name="댓글 관리" high1="콘텐츠 관리"/>
-      <SearchBar/>
+      <div className="searchBar">
+        <input type="text" placeholder="작성자, 댓글내용" value ={inputSearch} onChange={onChangeSearch}/>
+        <button onClick={commentSearch}> 검색 </button>
+      </div>
       <div>
+      <label>
+          페이지 당 표시할 게시물 수:&nbsp;
+          <select
+            type="number"
+            value={limit}
+            onChange={({ target: { value } }) => {
+              setLimit(Number(value));
+              setPage(1);
+              setPageStart(0);
+            }}
+          >
+            <option value="5">5</option>
+            <option value="7">7</option>
+            <option value="10" selected>10</option>
+            <option value="12">12</option>
+            <option value="20">20</option>
+          </select>
+        </label>
         <div className="tableWrapper">
           <table>
             <thead>
@@ -80,38 +135,43 @@ const CommentManagement = () =>{
                 <input type='checkbox' name='select-all'
                   onChange={(e) => handleAllCheck(e.target.checked)}
                   // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
-                  // checked={checkItems.length === data.length ? true : false} 
+                  checked={checkItems.length === (
+                    Math.floor(lists.length/limit) >= page ? 
+                    limit :lists.length % limit)? true : false}  
                 />
-                <th>게시글 번호</th>
-                <th>댓글 내용</th>
-                {/* 댓글 내용 누르면 더보기 가능하도록 구현 예정 */}
+                <th>댓글 번호</th>
                 <th>작성자</th>
+                <th>댓글내용</th>
                 <th>작성일</th>
+                <th>원글 번호</th>
               </tr>
             </thead>
             <tbody>
-              { prepared &&
+              { lists &&
                 lists.slice(offset, offset + limit)
-                .map(({ memberNum, nickname, grade, countWrite, countComment, phone, email, regDate }) => (
+                .map(({ commentNum, writeNum, nickname, writeDate, commentContent }) => (
                   <tr>
                     <td>
                     <input type='checkbox' 
-                      // name={`select-${data.id}`}
-                      // onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
+                      name={`select-${commentNum}`}
+                      onChange={(e) => handleSingleCheck(e.target.checked, commentNum)}
                       // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
-                      // checked={checkItems.includes(data.id) ? true : false} 
+                      checked={checkItems.includes(commentNum) ? true : false} 
                       />
                     </td>
-                    <td>{memberNum}</td>
+                    <td>{commentNum}</td>
                     <td>{nickname}</td>
-                    <td></td>
-                    <td>{grade}</td>
+                    <td onClick={()=>{setFullView(!fullView)}}>
+                      {!fullView? (commentContent.substring(0,30)):commentContent}
+                    </td>
+                    <td>{writeDate}</td>
+                    <td>{writeNum}</td>
                   </tr>
                 ))
               }
             </tbody>
           </table>
-          <button>삭제</button>
+          <button onClick={commentDelete}>삭제</button>
         </div>
         <Pagination
           total={lists.length}
@@ -120,6 +180,8 @@ const CommentManagement = () =>{
           setPage={setPage}
           pageStart={pageStart}
           setPageStart={setPageStart}
+          checkItems={checkItems} 
+          setCheckItems={setCheckItems}
         />
       </div>
     </div>
