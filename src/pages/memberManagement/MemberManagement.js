@@ -58,6 +58,7 @@ const MemberManagement = () =>{
 
   const memberSearch = () =>{
     window.localStorage.setItem("target", inputSearch);
+    setPrepared(false);
     const fetchSearchData = async () => {
       setLoading(true);
        try {

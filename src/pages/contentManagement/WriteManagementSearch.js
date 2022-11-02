@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import api from "../../api/api";
-import SearchBar from "../../components/SearchBar";
 import TopBar from "../../components/TopBar";
 import Pagination from "../../components/Pagination";
 import Loader from "../../components/Loader";
 import { isLogin } from "../../util/common";
 import { Link } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-const WriteManagement = () =>{
+const WriteManagementSearch = (props) =>{
+
+  let { query } = useParams();
+
   const [lists, setLists] = useState('');
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -15,6 +18,7 @@ const WriteManagement = () =>{
   const [pageStart, setPageStart] = useState(0);
 
   const [loading, setLoading] = useState(false);
+  const [prepared, setPrepared] = useState(false);
 
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
@@ -26,17 +30,18 @@ const WriteManagement = () =>{
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-     setLoading(true);
+    window.localStorage.setItem("target", query);
+    const fetchSearchData = async () => {
+      setLoading(true);
       try {
-        const response = await api.writeInfo();
+        const response = await api.writeInfoSearch();
         setLists(response.data);
       } catch (e) {
         console.log(e);
       }
       setLoading(false);
-    };
-    fetchData();
+      };
+    fetchSearchData();
   }, []);
 
   if(!isLogin){
@@ -154,4 +159,4 @@ const WriteManagement = () =>{
     </div>
   );
 };
-export default WriteManagement;
+export default WriteManagementSearch;

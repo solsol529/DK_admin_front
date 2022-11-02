@@ -11,6 +11,7 @@ import MemberManagement from "./pages/memberManagement/MemberManagement";
 import Loader from "./components/Loader";
 import BoardManagement from "./pages/contentManagement/BoardManagement";
 import WriteManagement from "./pages/contentManagement/WriteManagement";
+import WriteManagementSearch from "./pages/contentManagement/WriteManagementSearch"
 import CommentManagement from "./pages/contentManagement/CommentManagement";
 import AdManagement from "./pages/adManagement/AdManagement";
 import NotiSend from "./pages/notiManagement/NotiSend";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/member" element={<MemberManagement/>}/>
           <Route path="/content/boardManagement" element={<BoardManagement/>}/>
           <Route path="/content/writeManagement" element={<WriteManagement/>}/>
+          <Route path="/content/writeManagement/search/:query" element={<WriteManagementSearch/>}/>
           <Route path="/content/commentManagement" element={<CommentManagement/>}/>
           <Route path="/adManagement" element={<AdManagement/>}/>
           <Route path="/noti/send" element={<NotiSend/>}/>

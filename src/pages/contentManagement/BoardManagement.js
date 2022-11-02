@@ -51,6 +51,7 @@ const BoardManagement = () =>{
 
   const boardSearch = () =>{
     window.localStorage.setItem("target", inputSearch);
+    setPrepared(false);
     const fetchSearchData = async () => {
       setLoading(true);
        try {
@@ -67,6 +68,7 @@ const BoardManagement = () =>{
 
   const boardDelete = () =>{
     window.localStorage.setItem("target", checkItems);
+    setPrepared(false);
     const fetchDeleteData = async () => {
       setLoading(true);
        try {
