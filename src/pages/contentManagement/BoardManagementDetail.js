@@ -39,7 +39,9 @@ const BoardManagementDetail = () =>{
   }
   
   const onChangeBoard = (e) =>{
-    setNewBoardName(e.target.value);
+    const tmpName = e.target.value;
+    setNewBoardName(tmpName);
+    if(tmpName === "관리자") setErrMsg("게시판 이름으로 '관리자'는 사용 불가능합니다");
   }
 
   const boardNameDup = () =>{
@@ -51,17 +53,18 @@ const BoardManagementDetail = () =>{
         console.log(response.data.result);
         if(response.data.result === "OK") {
           setErrMsg("사용 가능한 게시판 이름입니다");
-          // const fetchUpdateData = async () => {
-          //   try {
-          //     const response = await api.boardUpdate();
-          //     if(response.data.result === "OK") {
-          //       window.location.replace("/content/boardManagement");}
-          //     else setErrMsg("게시판 수정에 실패했습니다!");
-          //   } catch (e) {
-          //     console.log(e);
-          //   }
-          // };
-          // fetchUpdateData();
+          const fetchUpdateData = async () => {
+            try {
+              const response = await api.boardUpdate(board, newBoardName);
+              if(response.data.result === "OK") {
+                // console.log("게시판 이름 수정 완료")
+                // 나중에 수정 완료 모달 띄우던가,,
+                window.location.replace("/content/boardManagement");}
+            } catch (e) {
+              console.log(e);
+            }
+          };
+          fetchUpdateData();
         } else setErrMsg("이미 존재하는 게시판 이름입니다");
       } catch (e) {
         console.log(e);

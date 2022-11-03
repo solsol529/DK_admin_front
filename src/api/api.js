@@ -52,9 +52,10 @@ const api = {
     }
     return await axios.post(BASE_URL + "AdminBoardNameDupServlet", regCmd, HEADER);
   },
-  boardUpdate: async function(boardName) {
+  boardUpdate: async function(boardName, newName) {
     const regCmd = {
-      boardName : boardName
+      boardName : boardName,
+      newName : newName
     }
     return await axios.post(BASE_URL + "AdminBoardUpdateServlet", regCmd, HEADER);
   },
