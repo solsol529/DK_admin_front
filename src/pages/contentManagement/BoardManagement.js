@@ -5,6 +5,7 @@ import TopBar from "../../components/TopBar";
 import Pagination from "../../components/Pagination";
 import Loader from "../../components/Loader";
 import { isLogin } from "../../util/common";
+import { Link } from 'react-router-dom';
 
 const BoardManagement = () =>{
   const [lists, setLists] = useState('');
@@ -142,7 +143,7 @@ const BoardManagement = () =>{
                       />
                     </td>
                     <td>{boardNum}</td>
-                    <td>{boardName}</td>
+                    <td><Link to={`/content/boardManagement/detail/${boardName}`}>{boardName}</Link></td>
                     <td>{countWrite}</td>
                   </tr>
                 ))

@@ -40,6 +40,12 @@ const api = {
     }
     return await axios.post(BASE_URL + "AdminBoardDeleteServlet", regCmd, HEADER);
   },
+  boardInfoDetail: async function() {
+    const regCmd = {
+      target : localStorage.getItem("target") //검색어 타겟 날려줌
+    }
+    return await axios.post(BASE_URL + "AdminBoardDetailServlet", regCmd, HEADER);
+  },
   writeInfo: async function() {
     const regCmd = {
       cmd : "WriteInfo"
