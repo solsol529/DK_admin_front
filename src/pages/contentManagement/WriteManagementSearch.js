@@ -82,6 +82,23 @@ const WriteManagementSearch = () =>{
     }
   }
 
+  const writeDelete = () =>{
+    window.localStorage.setItem("target", checkItems);
+    const fetchDeleteData = async () => {
+      setLoading(true);
+       try {
+         const response = await api.writeDelete();
+         setLists(response.data);
+       } catch (e) {
+         console.log(e);
+       }
+       setLoading(false);
+     };
+    fetchDeleteData();
+    setCheckItems([]);
+    window.location.replace("/content/writeManagement");
+  }
+
   if(isLogin){
     return(
       <div className="center">
@@ -148,7 +165,7 @@ const WriteManagementSearch = () =>{
                 }
               </tbody>
             </table>
-            <button>삭제</button>
+            <button onClick={writeDelete}>삭제</button>
           </div>
           <Pagination
             total={lists.length}
