@@ -38,7 +38,6 @@ const BoardManagement = () =>{
   }, []);
 
   if(!isLogin){
-    alert("잘못된 접근입니다!");
     window.location.replace("/");
   }
   
@@ -106,62 +105,64 @@ const BoardManagement = () =>{
     }
   }
 
-
-  return(
-    <div className="center">
-      <TopBar name="게시판 관리" high1="콘텐츠 관리"/>
-      <div className="searchBar">
-        <input type="text" placeholder="게시판 이름" value ={inputSearch} onChange={onChangeSearch}/>
-        <button onClick={boardSearch}>검색</button>
-      </div>
-      <div>
-        <div className="tableWrapper">
-          <table>
-            <thead>
-              <tr>
-                <input type='checkbox' name='select-all'
-                  onChange={(e) => handleAllCheck(e.target.checked)}
-                  // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
-                  checked={checkItems.length === (lists.length % 10) ? true : false} 
-                />
-                <th>게시판 번호</th>
-                <th>게시판 이름</th>
-                <th>게시글 수</th>
-              </tr>
-            </thead>
-            <tbody>
-              { lists &&
-                lists.slice(offset, offset + limit)
-                .map(({ boardNum, boardName, countWrite }) => (
-                  <tr>
-                    <td>
-                    <input type='checkbox' 
-                      name={`select-${boardName}`}
-                      onChange={(e) => handleSingleCheck(e.target.checked, boardName)}
-                      // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
-                      checked={checkItems.includes(boardName) ? true : false} 
-                      />
-                    </td>
-                    <td>{boardNum}</td>
-                    <td><Link to={`/content/boardManagement/detail/${boardName}`}>{boardName}</Link></td>
-                    <td>{countWrite}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-          <button onClick={boardDelete}>삭제</button>
+  if(isLogin){
+    return(
+      <div className="center">
+        <TopBar name="게시판 관리" high1="콘텐츠 관리"/>
+        <div className="searchBar">
+          <input type="text" placeholder="게시판 이름" value ={inputSearch} onChange={onChangeSearch}/>
+          <button onClick={boardSearch}>검색</button>
         </div>
-        <Pagination
-          total={lists.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-          pageStart={pageStart}
-          setPageStart={setPageStart}
-        />
+        <div>
+          <div className="tableWrapper">
+            <table>
+              <thead>
+                <tr>
+                  <input type='checkbox' name='select-all'
+                    onChange={(e) => handleAllCheck(e.target.checked)}
+                    // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
+                    checked={checkItems.length === (lists.length % 10) ? true : false} 
+                  />
+                  <th>게시판 번호</th>
+                  <th>게시판 이름</th>
+                  <th>게시글 수</th>
+                </tr>
+              </thead>
+              <tbody>
+                { lists &&
+                  lists.slice(offset, offset + limit)
+                  .map(({ boardNum, boardName, countWrite }) => (
+                    <tr>
+                      <td>
+                      <input type='checkbox' 
+                        name={`select-${boardName}`}
+                        onChange={(e) => handleSingleCheck(e.target.checked, boardName)}
+                        // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
+                        checked={checkItems.includes(boardName) ? true : false} 
+                        />
+                      </td>
+                      <td>{boardNum}</td>
+                      <td><Link to={`/content/boardManagement/detail/${boardName}`}>{boardName}</Link></td>
+                      <td>{countWrite}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+            <button onClick={boardDelete}>삭제</button>
+            <button><Link to="/content/boardManagement/add">추가</Link></button>
+          </div>
+          <Pagination
+            total={lists.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            pageStart={pageStart}
+            setPageStart={setPageStart}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 export default BoardManagement;

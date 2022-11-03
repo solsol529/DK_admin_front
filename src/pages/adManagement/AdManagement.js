@@ -35,7 +35,6 @@ const AdManagement = () =>{
   }, []);
 
   if(!isLogin){
-    alert("잘못된 접근입니다!");
     window.location.replace("/");
   }
   
@@ -67,62 +66,63 @@ const AdManagement = () =>{
       setCheckItems([]);
     }
   }
-
-  return(
-    <div className="center">
-      <TopBar name="광고 관리" high1="배너 관리"/>
-      <SearchBar/>
-      <div>
-        <div className="tableWrapper">
-          <table>
-            <thead>
-              <tr>
-                <input type='checkbox' name='select-all'
-                  onChange={(e) => handleAllCheck(e.target.checked)}
-                  // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
-                  // checked={checkItems.length === data.length ? true : false} 
-                />
-                <th>광고 번호</th>
-                <th>광고 이름</th>
-                <th>이동 URL</th>
-                <th>등록일</th>
-              </tr>
-            </thead>
-            <tbody>
-              { prepared &&
-                lists.slice(offset, offset + limit)
-                .map(({ memberNum, nickname, grade, countWrite, countComment, phone, email, regDate }) => (
-                  <tr>
-                    <td>
-                    <input type='checkbox' 
-                      // name={`select-${data.id}`}
-                      // onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
-                      // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
-                      // checked={checkItems.includes(data.id) ? true : false} 
-                      />
-                    </td>
-                    <td>{memberNum}</td>
-                    <td>{nickname}</td>
-                    <td><button>수정</button></td>
-                    <td>{grade}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-          <button>삭제</button>
-          <button>추가</button>
+  if (isLogin){
+    return(
+      <div className="center">
+        <TopBar name="광고 관리" high1="배너 관리"/>
+        <SearchBar/>
+        <div>
+          <div className="tableWrapper">
+            <table>
+              <thead>
+                <tr>
+                  <input type='checkbox' name='select-all'
+                    onChange={(e) => handleAllCheck(e.target.checked)}
+                    // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
+                    // checked={checkItems.length === data.length ? true : false} 
+                  />
+                  <th>광고 번호</th>
+                  <th>광고 이름</th>
+                  <th>이동 URL</th>
+                  <th>등록일</th>
+                </tr>
+              </thead>
+              <tbody>
+                { prepared &&
+                  lists.slice(offset, offset + limit)
+                  .map(({ memberNum, nickname, grade, countWrite, countComment, phone, email, regDate }) => (
+                    <tr>
+                      <td>
+                      <input type='checkbox' 
+                        // name={`select-${data.id}`}
+                        // onChange={(e) => handleSingleCheck(e.target.checked, data.id)}
+                        // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
+                        // checked={checkItems.includes(data.id) ? true : false} 
+                        />
+                      </td>
+                      <td>{memberNum}</td>
+                      <td>{nickname}</td>
+                      <td><button>수정</button></td>
+                      <td>{grade}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+            <button>삭제</button>
+            <button>추가</button>
+          </div>
+          <Pagination
+            total={lists.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            pageStart={pageStart}
+            setPageStart={setPageStart}
+          />
         </div>
-        <Pagination
-          total={lists.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-          pageStart={pageStart}
-          setPageStart={setPageStart}
-        />
       </div>
-    </div>
-  );
+    );
+  }
 };
 export default AdManagement;

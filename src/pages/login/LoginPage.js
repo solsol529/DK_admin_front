@@ -25,7 +25,7 @@ const LoginPage = ()=>{
       if(res.data.result === "OK") {
         localStorage.setItem("nickname", inputId);
         localStorage.setItem("pwd", inputPwd);
-        window.location.replace("/home");
+        window.location.replace("/member");
       }
       else { 
         console.log("로그인 에러..");

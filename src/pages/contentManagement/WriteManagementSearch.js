@@ -50,7 +50,6 @@ const WriteManagementSearch = () =>{
   }, [fetchSearchData]);
 
   if(!isLogin){
-    alert("잘못된 접근입니다!");
     window.location.replace("/");
   }
   
@@ -83,9 +82,7 @@ const WriteManagementSearch = () =>{
     }
   }
 
-  if(lists){
-    console.log("sadsadsad");
-    console.log(lists);
+  if(isLogin){
     return(
       <div className="center">
         <TopBar name="게시글 관리" high1="콘텐츠 관리"/>

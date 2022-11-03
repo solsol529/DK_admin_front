@@ -28,44 +28,45 @@ const WriteManagementDetail = () =>{
   }, []);
 
   if(!isLogin){
-    alert("잘못된 접근입니다!");
     window.location.replace("/");
   }
   
   if(loading) {
     return <div className="center"><Loader/></div>
   }
-  
-  return(
-    <div className="center">
-      <TopBar name="게시글 상세" high1="게시글 관리" high2="콘텐츠 관리"/>
-      <div>
-        {lists &&
-          lists
-          .map(({ boardName, writeNum, writeName, writeDate, nickname, countGood, countComment, writeContents, comments}) => (
-            <>
-            <span>{boardName}</span>
-            <span>{writeNum}</span>
-            <span>{writeName}</span>
-            <span>{nickname}</span>
-            <span>{writeDate}</span>
-            <span>댓글수 {countComment}</span>
-            <span>좋아요수{countGood}</span>
-            <p>{writeContents}</p>
-            <hr/>
-            {comments && comments
-            .map(({nickname, writeDate, commentContent})=>(
+
+  if(isLogin){
+    return(
+      <div className="center">
+        <TopBar name="게시글 상세" high1="게시글 관리" high2="콘텐츠 관리"/>
+        <div>
+          {lists &&
+            lists
+            .map(({ boardName, writeNum, writeName, writeDate, nickname, countGood, countComment, writeContents, comments}) => (
               <>
-              {nickname}
-              {writeDate}
-              {commentContent}
+              <span>{boardName}</span>
+              <span>{writeNum}</span>
+              <span>{writeName}</span>
+              <span>{nickname}</span>
+              <span>{writeDate}</span>
+              <span>댓글수 {countComment}</span>
+              <span>좋아요수{countGood}</span>
+              <p>{writeContents}</p>
+              <hr/>
+              {comments && comments
+              .map(({nickname, writeDate, commentContent})=>(
+                <>
+                {nickname}
+                {writeDate}
+                {commentContent}
+                </>
+              ))}
               </>
-            ))}
-            </>
-          ))
-        }
+            ))
+          }
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 export default WriteManagementDetail;

@@ -17,6 +17,7 @@ import AdManagement from "./pages/adManagement/AdManagement";
 import NotiSend from "./pages/notiManagement/NotiSend";
 import WriteManagementDetail from "./pages/contentManagement/WriteManagementDetail";
 import BoardManagementDetail from "./pages/contentManagement/BoardManagementDetail";
+import BoardManagementAdd from "./pages/contentManagement/BoardManagementAdd";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           {/* {!isLogin && <Navigate to="/login" />} */}
           <Route path="/member" element={<MemberManagement/>}/>
           <Route path="/content/boardManagement" element={<BoardManagement/>}/>
+          <Route path="/content/boardManagement/add" element={<BoardManagementAdd/>}/>
           <Route path="/content/boardManagement/detail/:board" element={<BoardManagementDetail/>}/>
           <Route path="/content/writeManagement" element={<WriteManagement/>}/>
           <Route path="/content/writeManagement/search/:query" element={<WriteManagementSearch/>}/>

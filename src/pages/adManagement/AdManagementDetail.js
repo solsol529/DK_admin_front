@@ -28,35 +28,36 @@ const AdManagementDetail = () =>{
   }, []);
 
   if(!isLogin){
-    alert("잘못된 접근입니다!");
     window.location.replace("/");
   }
   
   if(loading) {
     return <div className="center"><Loader/></div>
   }
-  
-  return(
-    <div className="center">
-      <TopBar name="배너 상세" high1="배너 관리" high2="광고 관리"/>
-      <div>
-        <label>
-          <span>배너 이름</span>
-          <input type="text"/>
-        </label>
-        <label>
-          <span>배너 이동 URL</span>
-          <input type="text"/>
-        </label>
-        <label>
-          <span>배너 상태</span>
-          <label><input type="radio"/>활성화</label>
-          <label><input type="radio"/>비활성화</label>
-        </label>
-        <button>수정하기</button>
+
+  if(isLogin){
+    return(
+      <div className="center">
+        <TopBar name="배너 상세" high1="배너 관리" high2="광고 관리"/>
+        <div>
+          <label>
+            <span>배너 이름</span>
+            <input type="text"/>
+          </label>
+          <label>
+            <span>배너 이동 URL</span>
+            <input type="text"/>
+          </label>
+          <label>
+            <span>배너 상태</span>
+            <label><input type="radio"/>활성화</label>
+            <label><input type="radio"/>비활성화</label>
+          </label>
+          <button>수정하기</button>
+        </div>
+       
       </div>
-     
-    </div>
-  );
+    );
+  }
 };
 export default AdManagementDetail;

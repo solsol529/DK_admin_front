@@ -28,7 +28,6 @@ const NotiSend = () =>{
   }, []);
 
   if(!isLogin){
-    alert("잘못된 접근입니다!");
     window.location.replace("/");
   }
   
@@ -36,23 +35,25 @@ const NotiSend = () =>{
     return <div className="center"><Loader/></div>
   }
   
-  return(
-    <div className="center">
-      <TopBar name="알림 발송" high1="알림 관리"/>
-      <label>
-        <span>알림 분류</span>
-        <label><input type="radio" name="notiType"/>공지사항</label>
-        <label><input type="radio" name="notiType"/>광고</label>
-      </label>
-      <label>
-        <span>제목</span>
-        <input type="text"/>
-      </label>
-      <label>
-        <span>내용</span>
-        <textarea/>
-      </label>
-    </div>
-  );
+  if(isLogin){
+    return(
+      <div className="center">
+        <TopBar name="알림 발송" high1="알림 관리"/>
+        <label>
+          <span>알림 분류</span>
+          <label><input type="radio" name="notiType"/>공지사항</label>
+          <label><input type="radio" name="notiType"/>광고</label>
+        </label>
+        <label>
+          <span>제목</span>
+          <input type="text"/>
+        </label>
+        <label>
+          <span>내용</span>
+          <textarea/>
+        </label>
+      </div>
+    );
+  }
 };
 export default NotiSend;

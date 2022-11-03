@@ -40,7 +40,6 @@ const WriteManagement = () =>{
   }, []);
 
   if(!isLogin){
-    alert("잘못된 접근입니다!");
     window.location.replace("/");
   }
   
@@ -88,88 +87,89 @@ const WriteManagement = () =>{
     fetchDeleteData();
     setCheckItems([]);
   }
-
-  return(
-    <div className="center">
-      <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
-      <div className="searchBar">
-        <input type="text" placeholder="제목, 작성자" value ={inputSearch} onChange={onChangeSearch}/>
-        <button>
-          <Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link>
-        </button>
-      </div>
-      <div>
-      <label>
-          페이지 당 표시할 게시물 수:&nbsp;
-          <select
-            type="number"
-            value={limit}
-            onChange={({ target: { value } }) => {
-              setLimit(Number(value));
-              setPage(1);
-              setPageStart(0);
-            }}
-          >
-            <option value="5">5</option>
-            <option value="7">7</option>
-            <option value="10" selected>10</option>
-            <option value="12">12</option>
-            <option value="20">20</option>
-          </select>
-        </label>
-        <div className="tableWrapper">
-          <table>
-            <thead>
-              <tr>
-                <input type='checkbox' name='select-all'
-                  onChange={(e) => handleAllCheck(e.target.checked)}
-                  // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
-                  checked={checkItems.length === (
-                  Math.floor(lists.length/limit) >= page ? 
-                  limit :lists.length % limit)? true : false} 
-                />
-                <th>게시글 번호</th>
-                <th>게시글 제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lists &&
-                lists.slice(offset, offset + limit)
-                .map(({ writeNum, writeName, writeDate, nickname}) => (
-                  <tr key={writeNum}>
-                    <td>
-                    <input type='checkbox' 
-                      name={`select-${writeNum}`}
-                      onChange={(e) => handleSingleCheck(e.target.checked, writeNum)}
-                      // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
-                      checked={checkItems.includes(writeNum) ? true : false} 
-                      />
-                    </td>
-                    <td>{writeNum}</td>
-                    <td><Link to={`/content/writeManagement/detail/${writeNum}`}>{writeName}</Link></td>
-                    <td>{writeDate}</td>
-                    <td>{nickname}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-          <button onClick={writeDelete}>삭제</button>
+  if(isLogin){
+    return(
+      <div className="center">
+        <TopBar name="게시글 관리" high1="콘텐츠 관리"/>
+        <div className="searchBar">
+          <input type="text" placeholder="제목, 작성자" value ={inputSearch} onChange={onChangeSearch}/>
+          <button>
+            <Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link>
+          </button>
         </div>
-        <Pagination
-          total={lists.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-          pageStart={pageStart}
-          setPageStart={setPageStart}
-          checkItems={checkItems} 
-          setCheckItems={setCheckItems}
-        />
+        <div>
+        <label>
+            페이지 당 표시할 게시물 수:&nbsp;
+            <select
+              type="number"
+              value={limit}
+              onChange={({ target: { value } }) => {
+                setLimit(Number(value));
+                setPage(1);
+                setPageStart(0);
+              }}
+            >
+              <option value="5">5</option>
+              <option value="7">7</option>
+              <option value="10" selected>10</option>
+              <option value="12">12</option>
+              <option value="20">20</option>
+            </select>
+          </label>
+          <div className="tableWrapper">
+            <table>
+              <thead>
+                <tr>
+                  <input type='checkbox' name='select-all'
+                    onChange={(e) => handleAllCheck(e.target.checked)}
+                    // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
+                    checked={checkItems.length === (
+                    Math.floor(lists.length/limit) >= page ? 
+                    limit :lists.length % limit)? true : false} 
+                  />
+                  <th>게시글 번호</th>
+                  <th>게시글 제목</th>
+                  <th>작성자</th>
+                  <th>작성일</th>
+                </tr>
+              </thead>
+              <tbody>
+                {lists &&
+                  lists.slice(offset, offset + limit)
+                  .map(({ writeNum, writeName, writeDate, nickname}) => (
+                    <tr key={writeNum}>
+                      <td>
+                      <input type='checkbox' 
+                        name={`select-${writeNum}`}
+                        onChange={(e) => handleSingleCheck(e.target.checked, writeNum)}
+                        // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
+                        checked={checkItems.includes(writeNum) ? true : false} 
+                        />
+                      </td>
+                      <td>{writeNum}</td>
+                      <td><Link to={`/content/writeManagement/detail/${writeNum}`}>{writeName}</Link></td>
+                      <td>{writeDate}</td>
+                      <td>{nickname}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+            <button onClick={writeDelete}>삭제</button>
+          </div>
+          <Pagination
+            total={lists.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            pageStart={pageStart}
+            setPageStart={setPageStart}
+            checkItems={checkItems} 
+            setCheckItems={setCheckItems}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 export default WriteManagement;
