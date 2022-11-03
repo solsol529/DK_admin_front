@@ -12,6 +12,7 @@ const BoardManagementDetail = () =>{
   const [lists, setLists] = useState('');
   const [loading, setLoading] = useState(false);
   const [newBoardName, setNewBoardName] = useState(board);
+  const [errMsg, setErrMsg] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +42,35 @@ const BoardManagementDetail = () =>{
     setNewBoardName(e.target.value);
   }
 
+  const boardNameDup = () =>{
+    const fetchSearchData = async () => {
+      setLoading(true);
+       try {
+        console.log(newBoardName);
+        const response = await api.boardNameDup(newBoardName);
+        console.log(response.data.result);
+        if(response.data.result === "OK") {
+          setErrMsg("사용 가능한 게시판 이름입니다");
+          // const fetchUpdateData = async () => {
+          //   try {
+          //     const response = await api.boardUpdate();
+          //     if(response.data.result === "OK") {
+          //       window.location.replace("/content/boardManagement");}
+          //     else setErrMsg("게시판 수정에 실패했습니다!");
+          //   } catch (e) {
+          //     console.log(e);
+          //   }
+          // };
+          // fetchUpdateData();
+        } else setErrMsg("이미 존재하는 게시판 이름입니다");
+      } catch (e) {
+        console.log(e);
+      }
+      setLoading(false);
+    };
+    fetchSearchData();
+  }
+
   return(
     <div className="center">
       <TopBar name="게시판 상세" high1="게시판 관리" high2="콘텐츠 관리"/>
@@ -50,7 +80,8 @@ const BoardManagementDetail = () =>{
           .map(({ countWrite, writes}) => (
             <>
             <input type="text" value={newBoardName} onChange={onChangeBoard}/>
-            <button>수정</button>
+            <button onClick={boardNameDup}>수정</button>
+            <p>{errMsg}</p>
             <span>게시글 수 총{countWrite}개</span>
             <hr/>
             <p>최근 게시판에 작성된 글 {writes.length}개</p>
