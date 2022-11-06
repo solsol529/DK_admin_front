@@ -36,11 +36,7 @@ const LoginPage = ()=>{
     }
   }
   if(isLogin){
-    return(
-      <div className="center">
-        <p>잘못된 접근입니다</p>
-      </div>
-    );
+    window.location.replace("/member");
   } else{
     return(
       <div>
