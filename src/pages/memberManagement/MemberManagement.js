@@ -19,6 +19,8 @@ const MemberManagement = () =>{
   
   const [inputSearch, setInputSearch] = useState('');
 
+  const [thisProfile, setThisProfile] = useState('');
+
   // 모달창 노출 여부 state
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -128,8 +130,11 @@ const MemberManagement = () =>{
                       <td>{email}</td>
                       <td>{regDate}</td>
                       <td>
-                        {pfImg && <button onClick={showModal}>이미지 보기</button>}
-                        {modalOpen && <Modal setModalOpen={setModalOpen} imgUrl={pfImg}/>}
+                        {pfImg && <button onClick={() =>{
+                          showModal()
+                          setThisProfile(pfImg)
+                        }}>이미지 보기</button>}
+                        {modalOpen && <Modal setModalOpen={setModalOpen} imgUrl={thisProfile}/>}
                       </td>
                       <td>{isAdOk? "O":"X"}</td>
                     </tr>
