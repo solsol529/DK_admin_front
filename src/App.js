@@ -18,6 +18,8 @@ import NotiSend from "./pages/notiManagement/NotiSend";
 import WriteManagementDetail from "./pages/contentManagement/WriteManagementDetail";
 import BoardManagementDetail from "./pages/contentManagement/BoardManagementDetail";
 import BoardManagementAdd from "./pages/contentManagement/BoardManagementAdd";
+import AdManagementDetail from "./pages/adManagement/AdManagementDetail"
+import AdManagementAdd from "./pages/adManagement/AdManagementAdd"
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
           <Route path="/content/writeManagement/detail/:writeId" element={<WriteManagementDetail/>}/>
           <Route path="/content/commentManagement" element={<CommentManagement/>}/>
           <Route path="/adManagement" element={<AdManagement/>}/>
+          <Route path="/adManagement/AdManagementDetail/:ad_num" element = {<AdManagementDetail/>}/>
+          <Route path="/adManagement/AdManagementAdd" element = {<AdManagementAdd/>}/>
           <Route path="/noti/send" element={<NotiSend/>}/>
         </Routes>
       </Router>
