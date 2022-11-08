@@ -98,7 +98,7 @@ const WriteManagement = () =>{
           </button>
         </div>
         <div>
-        <label>
+        <label className="pageselect">
             페이지 당 표시할 게시물 수:&nbsp;
             <select
               type="number"
@@ -155,7 +155,9 @@ const WriteManagement = () =>{
                 }
               </tbody>
             </table>
+            <div className="btnlst">
             <button onClick={writeDelete}>삭제</button>
+            </div>
           </div>
           <Pagination
             total={lists.length}

@@ -5,10 +5,11 @@ import { isLogin, logout } from "../util/common";
 const Header = () =>{ 
   return(
     <div className="header">
-      <p className="logo"><Link to={'/'}><img src={logo} alt="개발하는커비"/>개발하는 커비</Link></p>
+      <Link to={'/'} className="logo"><img src={logo} alt="개발하는커비"/>
+      <span className="title">개발하는 커비</span></Link>
       {isLogin && 
         <p className="headerMenu">
-          <span>관리자(admin)</span>
+          <span>관리자(ADMIN)</span>
           <button onClick={logout}>로그아웃</button>
         </p>
       }

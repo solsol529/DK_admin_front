@@ -39,8 +39,8 @@ const LoginPage = ()=>{
     window.location.replace("/member");
   } else{
     return(
-      <div>
-        <div>
+      <div className="loginwrapper">
+        <div className="loginbox">
           <input type="text" placeholder="아이디" value ={inputId} onChange={onChangeId}></input>
           <input type="password" placeholder="비밀번호" value ={inputPwd} onChange={onChangePwd}></input>
           <button onClick={onClickLogin}>로그인</button>

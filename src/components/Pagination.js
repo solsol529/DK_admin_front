@@ -3,7 +3,7 @@ const Pagination = (props) => {
   const numPages = Math.ceil(props.total / props.limit);
   const viewPages = (numPages > 10? 10 : numPages);
   return (
-    <>
+    <div className="pagination">
       <button 
         onClick={() => {
           props.setPage(props.page - 1); 
@@ -39,7 +39,7 @@ const Pagination = (props) => {
       >
         &gt;
       </button>
-    </>
+    </div>
   );
 }
 

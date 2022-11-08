@@ -149,8 +149,10 @@ const BoardManagement = () =>{
                 }
               </tbody>
             </table>
-            <button onClick={boardDelete}>삭제</button>
-            <button><Link to="/content/boardManagement/add">추가</Link></button>
+            <div className="btnlst">
+              <button onClick={boardDelete}>삭제</button>
+              <button><Link to="/content/boardManagement/add">추가</Link></button>
+            </div>
           </div>
           <Pagination
             total={lists.length}

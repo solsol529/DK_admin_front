@@ -86,7 +86,6 @@ const BoardManagementDetail = () =>{
               <button onClick={boardNameDup}>수정</button>
               <p>{errMsg}</p>
               <span>게시글 수 총{countWrite}개</span>
-              <hr/>
               <p>최근 게시판에 작성된 글 {writes.length}개</p>
               {writes && writes
               .map(({writeName, writeDate, nickname})=>(

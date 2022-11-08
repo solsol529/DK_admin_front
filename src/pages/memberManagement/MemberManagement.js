@@ -82,8 +82,8 @@ const MemberManagement = () =>{
           <button onClick={memberSearch}>검색</button>
         </div>
         <div>
-          <label>
-            페이지 당 표시할 게시물 수:&nbsp;
+          <label className="pageselect">
+            페이지 당 표시할 회원 수:&nbsp;
             <select
               type="number"
               value={limit}
@@ -101,7 +101,7 @@ const MemberManagement = () =>{
             </select>
           </label>
           <div className="tableWrapper">
-            <table>
+            <table className="membertb">
               <thead>
                 <tr>
                   <th>회원번호</th>

@@ -108,7 +108,7 @@ const WriteManagementSearch = () =>{
           <button><Link to={`/content/writeManagement/search/${inputSearch}`}>검색</Link></button>
         </div>
         <div>
-        <label>
+        <label className="pageselect">
             페이지 당 표시할 게시물 수:&nbsp;
             <select
               type="number"
@@ -165,7 +165,9 @@ const WriteManagementSearch = () =>{
                 }
               </tbody>
             </table>
+            <div className="btnlst">
             <button onClick={writeDelete}>삭제</button>
+            </div>
           </div>
           <Pagination
             total={lists.length}

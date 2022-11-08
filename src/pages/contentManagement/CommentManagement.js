@@ -110,8 +110,8 @@ const CommentManagement = () =>{
           <button onClick={commentSearch}> 검색 </button>
         </div>
         <div>
-        <label>
-            페이지 당 표시할 게시물 수:&nbsp;
+        <label className="pageselect">
+            페이지 당 표시할 댓글 수:&nbsp;
             <select
               type="number"
               value={limit}
@@ -162,7 +162,16 @@ const CommentManagement = () =>{
                       <td>{commentNum}</td>
                       <td>{nickname}</td>
                       <td onClick={()=>{setFullView(!fullView)}}>
-                        {!fullView? (commentContent.substring(0,30)):commentContent}
+                        {!fullView? (commentContent.substring(0,60)):
+                        (
+                          <>
+                          {commentContent.substring(0,60)}
+                          <br/>
+                          {commentContent.substring(60,120)}
+                          <br/>
+                          {commentContent.substring(120,180)}
+                          </>
+                        )}
                       </td>
                       <td>{writeDate}</td>
                       <td>{writeNum}</td>
@@ -171,7 +180,9 @@ const CommentManagement = () =>{
                 }
               </tbody>
             </table>
+          <div className="btnlst">
             <button onClick={commentDelete}>삭제</button>
+          </div>
           </div>
           <Pagination
             total={lists.length}
