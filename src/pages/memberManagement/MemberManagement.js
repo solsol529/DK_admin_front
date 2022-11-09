@@ -97,7 +97,7 @@ const MemberManagement = () =>{
               <option value="7">7</option>
               <option value="10" selected>10</option>
               <option value="12">12</option>
-              <option value="20">30</option>
+              <option value="20">20</option>
             </select>
           </label>
           <div className="tableWrapper">
