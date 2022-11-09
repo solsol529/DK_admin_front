@@ -188,7 +188,9 @@ body{
 
   /* 모달창 디자인 */
   background-color: rgba(255, 255, 255, .5);
-  border: 1px solid black;
+  border: 2px solid #FC4B88;
+
+  border-radius: 10px;
 
   >p{
     width: 300px;

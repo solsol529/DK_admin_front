@@ -80,7 +80,7 @@ const BoardManagementAdd = () =>{
         <div>
           <input type="text" value={newBoardName} onChange={onChangeBoard}/>
           <p>{errMsg}</p>
-          <button onClick={boardNameDup}>추가</button>
+          <button className="adbutton" onClick={boardNameDup}>추가</button>
         </div>
       </div>
     );
