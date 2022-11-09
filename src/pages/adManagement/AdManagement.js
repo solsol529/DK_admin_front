@@ -143,7 +143,8 @@ const AdManagement = () =>{
                     </td>
                     <td>{ad_num}</td>
                     <td>{ad_name}</td>
-                    <td><button onClick={adminAdUpdate}><Link to={`/adManagement/AdManagementDetail/${ad_num}`}>수정</Link></button></td>
+                    <td><button onClick={adminAdUpdate}><Link className="adbutton"
+                    to={`/adManagement/AdManagementDetail/${ad_num}`}>수정</Link></button></td>
                     <td>{ad_url}</td>
                     <td>{ad_img}</td>
                   </tr>

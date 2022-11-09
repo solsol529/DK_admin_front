@@ -130,7 +130,7 @@ const MemberManagement = () =>{
                       <td>{email}</td>
                       <td>{regDate}</td>
                       <td>
-                        {pfImg && <button onClick={() =>{
+                        {pfImg && <button className="memberbutton" onClick={() =>{
                           showModal()
                           setThisProfile(pfImg)
                         }}>이미지 보기</button>}
