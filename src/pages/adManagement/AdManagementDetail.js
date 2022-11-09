@@ -128,41 +128,45 @@ const AdManagementDetail = () =>{
        setLoading(false);
      };
      fetchAdUpdateData();
+     window.location.replace("/adManagement");
   }
 
   return(
     <div className="center">
       <TopBar name="배너 상세" high1="배너 관리" high2="광고 관리"/>
-        
-            <label>
-            <span>광고 이름</span>
-            <input type="text" value={ad_name} onChange={onChangeAd_name} />
-          </label>
+        <div className="searchBar">
           <label>
-            <span>광고 이동 URL</span>
+              <span className="adspan1">광고 이름</span>
+              <input type="text" value={ad_name} onChange={onChangeAd_name} />
+            </label>
+        </div>
+        <div className="searchBar">
+          <label>
+            <span className="adspan2">광고 이동 URL</span>
             <input type="text" value={ad_url}  onChange={onChangeAd_url} />
           </label>
-       
+        </div>
         {/* 이미지 아직 미구현  */}
       
         <label>
-          <span>광고 이미지</span>
+          <span className="adspan3">광고 이미지</span>
           {error && {error}}
+
           <form className="adImgForm" onSubmit={onSubmit}>
             <input type="file" onChange={handleImage} />
             <button onClick={onSubmit}>업로드</button>
           </form>
           {imageUrl && (
-            <div>
+            <div className="adspan4">
               <p> 이미지 미리보기</p>
               <img className="adImgPreview" src={imageUrl} alt="uploaded"/>
             </div>
           )}
         </label>
-        
-        <button onClick={adminAdUpdate}><Link to={"/adManagement"}>수정하기</Link></button>
+        <button className="adbutton" onClick={adminAdUpdate}>
+          <Link className="updatebutton" to="#">수정하기</Link>
+        </button>
       </div>
-     
   );
 };
 export default AdManagementDetail;

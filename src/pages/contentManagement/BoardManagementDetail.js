@@ -82,20 +82,27 @@ const BoardManagementDetail = () =>{
             lists
             .map(({ countWrite, writes}) => (
               <>
-              <input type="text" value={newBoardName} onChange={onChangeBoard}/>
-              <button onClick={boardNameDup}>수정</button>
+              <div className="searchBar">
+              <input className="boardinput" type="text" value={newBoardName} onChange={onChangeBoard}/>
+              <button onClick={boardNameDup}>게시판 이름 변경</button>
               <p>{errMsg}</p>
+              </div>
+              <div className="boarddetail">
               <span>게시글 수 총{countWrite}개</span>
               <p>최근 게시판에 작성된 글 {writes.length}개</p>
               {writes && writes
               .map(({writeName, writeDate, nickname})=>(
-                <>
-                글제목{writeName}
-                작성자{nickname}
-                작성시간{writeDate}
-                </>
+                <div className="boardwritelist">
+                <p>
+                글제목 : {writeName}
+                </p>
+                <p>
+                작성자 : {nickname} 작성시간 : {writeDate}
+                </p>
+                </div>
               ))}
               {!writes && <p>해당 게시판에 게시글이 없습니다!</p>}
+              </div>
               </>
             ))
           }

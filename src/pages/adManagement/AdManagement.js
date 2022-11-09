@@ -121,9 +121,9 @@ const AdManagement = () =>{
                   // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
                   checked={checkItems.length === (lists.length % 10) ? true : false} 
                 />
-                <th></th>
                 <th>광고 번호</th>
                 <th>광고 이름</th>
+                <th></th>
                 <th>이동 URL</th>
                 <th>광고 이미지</th>
               </tr>

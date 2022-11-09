@@ -11,7 +11,7 @@ button, input, select{
   font-family: 'SUIT-Medium';
 }
 
-input, select{
+input, select, textarea{
   border-radius: 5px;
 }
 select{
@@ -338,5 +338,142 @@ table{
     border-radius: 5px;
     background-color: #FE83B1;
     padding: 2px 5px 2px 5px;
+  }
+}
+
+.adspan1, .adspan2{
+  margin-right: 5px;
+  margin-left: -10px;
+}
+.adspan4{
+  margin-top: 10px;
+}
+
+.adImgForm{
+  margin-top: 10px;
+  button{
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: #FE83B1;
+    padding: 2px 5px 2px 5px;
+  }
+  input[type=file]::file-selector-button{
+    font-family: 'SUIT-Medium';
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: #FE83B1;
+    padding: 2px 5px 2px 5px;
+    border: none;
+  }
+}
+.adImgPreview{
+  margin-top: 10px;
+  width: 600px;
+}
+
+.adbutton{
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: #FE83B1;
+  padding: 2px 5px 2px 5px;
+
+  .updatebutton{
+    font-size: 16px;
+  }
+}
+
+.notilabel{
+  display: flex;
+  align-content: center;
+  span{
+    margin-right: 5px;
+  }
+  div{
+    display: flex;
+    align-content: center;
+    label{
+      display: flex;
+      align-content: center;
+    }
+  }
+}
+
+.notiareaname{
+  display: flex;
+  align-content: center;
+
+  span{
+    padding-top: 100px;
+  }
+}
+
+.notiarea{
+  margin-top: 10px;
+  margin-left: 5px;
+  width: 400px;
+  height: 200px;
+}
+
+.notibutton{
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: #FE83B1;
+  padding: 2px 5px 2px 5px;
+  font-size: 16px;
+}
+
+.notispan1{
+  padding-right: 5px;
+}
+
+.boardinput{
+  margin-left: -10px;
+}
+
+.boarddetail{
+  display: flex;
+  flex-direction: column;
+
+  span{
+    margin-bottom: 10px;
+  }
+  p{
+    margin-bottom: 10px;
+  }
+}
+
+.boardwritelist{
+  width: 400px;
+  background-color: rgba(255, 255, 255, .2);
+  padding: 5px 5px 0px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.writedetail{
+  padding: 5px 5px 0px 5px;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, .2);
+  span, p{
+    margin-bottom: 5px;
+  }
+  .statelist{
+    padding-bottom: 5px;
+    border-bottom: 1px solid #FE83B1;
+  }
+  .writecontent{
+    padding-top: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #FE83B1;
+  }
+  .commentdetail{
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
   }
 }

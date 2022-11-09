@@ -9,7 +9,7 @@ const Loader = () =>{
         }}
       >
         <PacmanLoader
-          color="#36d7b7"
+          color="#FC4B88"
           size={50}
         />
       </div>

@@ -25,31 +25,6 @@ const NotiSend = () =>{
   // 체크된 아이템을 담을 배열
   const [checkItems, setCheckItems] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //    setLoading(true);
-  //     try {
-  //       const response = await api.memberInfo();
-  //       setLists(response.data);
-  //       setPrepared(true);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //     setLoading(false);
-  //   };
-  //   fetchData();
-  // }, []);
-
-  // if(!isLogin){
-  //   alert("잘못된 접근입니다!");
-  //   window.location.replace("/");
-  // }
-  
-  // if(loading) {
-  //   return <div className="center"><Loader/></div>
-  // }
-
-
   const adminNotiSend = () => {
     setPrepared(false);
     const fetchDeleteData = async () => {
@@ -89,7 +64,7 @@ const NotiSend = () =>{
 return(
   <div className="center">
     <TopBar name="알림 발송" high1="알림 관리"/>
-    <label>
+    <label className="notilabel">
       <span>알림 분류</span>
       <div>
       <label><input type="radio" name="notisend" onChange={handleClickRadioButton} value="notice" />공지사항</label>
@@ -98,16 +73,18 @@ return(
     </label>
     <br/>
       <label>
-        <span>제목</span>
+        <span className="notispan1">제목</span>
         <input type="text" value={title} onChange={onChangeTitle}/>
       </label>
       <br/>
-      <label>
+      <label className="notiareaname">
         <span>내용</span>
-        <textarea value={content} onChange={onChangeContent}/>
+        <textarea className="notiarea" value={content} onChange={onChangeContent}
+        placeholder="자동으로 회원의 이름이 알림 내용에 들어갑니다"/>
       </label>
       <br/>
-      <button onClick={adminNotiSend} disabled ={disabled} >발송</button>
+      <button className="notibutton"
+      onClick={adminNotiSend} disabled ={disabled} >발송</button>
     </div>
   );
 };

@@ -39,27 +39,31 @@ const WriteManagementDetail = () =>{
     return(
       <div className="center">
         <TopBar name="게시글 상세" high1="게시글 관리" high2="콘텐츠 관리"/>
-        <div>
+        <div className="writedetail">
           {lists &&
             lists
             .map(({ boardName, writeNum, writeName, writeDate, nickname, countGood, countComment, writeContents, comments}) => (
               <>
-              <span>{boardName}</span>
-              <span>{writeNum}</span>
-              <span>{writeName}</span>
-              <span>{nickname}</span>
-              <span>{writeDate}</span>
-              <span>댓글수 {countComment}</span>
-              <span>좋아요수{countGood}</span>
-              <p>{writeContents}</p>
-              <hr/>
+              <span>{boardName}게시판</span>
+              <span>글번호 : {writeNum}</span>
+              <span>제목 : {writeName}</span>
+              <p>
+              <span> 작성자 : {nickname} </span>
+              <span> {writeDate}</span>
+              </p>
+              <p className="statelist">
+              <span>댓글수 {countComment} </span>
+              <span>좋아요수 {countGood}</span>
+              </p>
+              <p className="writecontent">{writeContents}</p>
               {comments && comments
               .map(({nickname, writeDate, commentContent})=>(
-                <>
-                {nickname}
-                {writeDate}
+                <div className="commentdetail">
+                <span>
+                {nickname} {writeDate}
+                </span>
                 {commentContent}
-                </>
+                </div>
               ))}
               </>
             ))
