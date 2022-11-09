@@ -63,7 +63,7 @@ const AdManagementAdd = () =>{
        setLoading(false);
      };
      fetchAdUpdateData();
-     window.location.reload();
+     window.location.replace("/adManagement");
   }
   
 
@@ -118,14 +118,18 @@ const AdManagementAdd = () =>{
     <div className="center">
       <TopBar name="배너 추가" high1="배너 관리" high2="광고 관리"/>
       <div>
+      <div className="addiv1">
       <label>
-          <span>광고 이름</span>
+          <span className="adadd1">광고 이름</span>
           <input type="text" value={ad_name} onChange={onChangeAd_name}/>
         </label>
+      </div>
+      <div className="addiv1">
         <label>
-          <span>광고 이동 URL</span>
+          <span className="adadd1">광고 이동 URL</span>
           <input type="text" value={ad_url} onChange={onChangeAd_url}/>
         </label>
+      </div>
         <label>
           <span>광고 이미지</span>
           {error && {error}}
@@ -134,14 +138,15 @@ const AdManagementAdd = () =>{
             <button onClick={onSubmit}>업로드</button>
           </form>
           {imageUrl && (
-            <div>
+            <div className="adspan4">
               <p> 이미지 미리보기</p>
               <img className="adImgPreview" src={imageUrl} alt="uploaded"/>
             </div>
           )}
         </label>
         <br/>
-        <button onClick={adminAdAdd}><Link to={"/adManagement"}>등록하기</Link></button>
+        <button className="notibutton"
+        onClick={adminAdAdd}>등록하기</button>
       </div>
      
     </div>
